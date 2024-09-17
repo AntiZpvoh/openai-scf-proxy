@@ -16,7 +16,7 @@ function convertTime(timestamp){
   return newDate.toUTCString();
 }
 
-app.use('/', function(req, res){
+app.get('/', function(req, res){
   res.render('index.nginx-debian.html');
 });
 

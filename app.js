@@ -13,7 +13,7 @@ function convertTime(timestamp){
 
 // app.use(express.json())
 // app.use(express.urlencoded({extended: true}))
-app.all('/chatgpt-proxy/*', createProxyMiddleware({
+app.use('/', createProxyMiddleware({
   target: 'https://api.openai.com',
   pathRewrite: {
     '^/chatgpt-proxy':'' //remove /service/api

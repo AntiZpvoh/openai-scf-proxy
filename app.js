@@ -1,8 +1,13 @@
 const express = require('express')
+var fs = require('fs');
+var sys = require('sys');
+
 const {
   createProxyMiddleware
 } = require('http-proxy-middleware');
 const app = express()
+app.set("view options", {layout: false});
+app.use(express.static('/var/www/html'));
 const port = 9000
 
 function convertTime(timestamp){
@@ -12,7 +17,7 @@ function convertTime(timestamp){
 }
 
 app.use('/', function(req, res){
-  fs.readFile('/var/www/html/index.nginx-debian.html');
+  res.render('index.html');
 });
 
 app.use('/chatgpt-proxy', createProxyMiddleware({

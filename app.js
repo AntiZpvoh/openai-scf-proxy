@@ -11,12 +11,14 @@ function convertTime(timestamp){
   return newDate.toUTCString();
 }
 
-// app.use(express.json())
-// app.use(express.urlencoded({extended: true}))
+app.use('/', function(req, res){
+  fs.readFile('/var/www/html/index.nginx-debian.html');
+});
+
 app.use('/chatgpt-proxy', createProxyMiddleware({
   target: 'https://api.openai.com',
   pathRewrite: {
-    '^/chatgpt-proxy':'' //remove /service/api
+    '^/chatgpt-proxy':''
   },
   changeOrigin: true,
   onProxyReq: (proxyReq, req, res) => {
@@ -25,8 +27,6 @@ app.use('/chatgpt-proxy', createProxyMiddleware({
     console.log(`[${convertTime(Date.now())}] Req Headers from ${req.ip}: `, req.headers);
     proxyReq.removeHeader('x-forwarded-for');
     proxyReq.removeHeader('x-real-ip');
-    // console.log(`[${convertTime(Date.now())}] Req URL: `, req.originalUrl);
-    // console.log(`[${convertTime(Date.now())}] Req headers from ${req.originalUrl}: `, req.headers);
   },
   onProxyRes: function (proxyRes, req, res) {
     proxyRes.headers['Access-Control-Allow-Origin'] = '*';

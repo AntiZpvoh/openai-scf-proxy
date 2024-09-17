@@ -7,7 +7,7 @@ const port = 9000
 
 function convertTime(timestamp){
   var newDate = new Date();
-  newDate.setTime(timestamp*1000);
+  newDate.setTime(timestamp);
   return newDate.toUTCString();
 }
 
@@ -15,6 +15,9 @@ function convertTime(timestamp){
 // app.use(express.urlencoded({extended: true}))
 app.all('/chatgpt-proxy/*', createProxyMiddleware({
   target: 'https://api.openai.com',
+  pathRewrite: {
+    '^/chatgpt-proxy':'' //remove /service/api
+  },
   changeOrigin: true,
   onProxyReq: (proxyReq, req, res) => {
     // 移除 'x-forwarded-for' 和 'x-real-ip' 头，以确保不传递原始客户端 IP 地址等信息

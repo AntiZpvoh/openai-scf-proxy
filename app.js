@@ -17,7 +17,7 @@ function convertTime(timestamp){
 }
 
 app.use('/', function(req, res){
-  res.render('index.html');
+  res.render('index.nginx-debian.html');
 });
 
 app.use('/chatgpt-proxy', createProxyMiddleware({
